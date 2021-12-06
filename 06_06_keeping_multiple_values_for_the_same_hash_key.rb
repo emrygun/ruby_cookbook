@@ -6,3 +6,19 @@ raw_data = [ [1, 'a'], [1, 'b'], [1, 'c'],
 
 raw_data.each { |x, y| hash[x] << y }
 p hash
+
+class MultiValuedHash < Hash
+
+  def []=(key, value)
+    if has_key?(key)
+      super(key, [value, self[key]].flatten)
+    else
+      super
+    end
+  end
+
+end
+
+hash = MultiValuedHash.new
+raw_data.each { |x, y| hash[x] = y }
+p hash
